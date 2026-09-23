@@ -17,8 +17,7 @@ of Hong Kong (HKU), advised by Prof. Taku Komura. I received my BEng in Computer
 Science from HKU in 2025.
 
 My research interests lie at the intersection of **computer graphics**, **human
-motion generation**, and **robotics**. I am particularly interested in building
-intelligent systems that can understand and synthesize realistic human motion.
+motion generation**, and **robotics**.
 
 ## News
 
