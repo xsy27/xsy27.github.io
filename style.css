@@ -25,7 +25,8 @@ h2 { margin-bottom: 22px; font-size: 24px; font-weight: 650; letter-spacing: -.0
 .news-item time { color: var(--muted); font-size: 14px; white-space: nowrap; }
 .news-item p { margin: 0; }
 .publication { display: grid; grid-template-columns: 235px 1fr; overflow: hidden; border: 1px solid var(--line); }
-.publication-image { display: flex; align-items: center; background: #0c0c0c; }
+.publication + .publication { margin-top: 20px; }
+.publication-image { display: flex; align-items: center; justify-content: center; min-width: 0; padding: 12px; background: #fff; }
 .publication-image img { display: block; width: 100%; height: auto; }
 .publication-body { min-width: 0; padding: 20px 24px; }
 .publication-venue { margin-bottom: 7px; color: var(--link); font-size: 13px; font-weight: 700; }
@@ -45,7 +46,7 @@ footer { padding: 25px 0 35px; border-top: 1px solid var(--line); color: var(--m
   nav { gap: 8px 18px; }
   .intro { padding: 56px 0 50px; }
   .publication { grid-template-columns: 1fr; }
-  .publication-image { max-height: 210px; }
+  .publication-image img { height: 200px; object-fit: contain; }
   .publication-body { padding: 19px; }
   .news-item, .education-item { grid-template-columns: 1fr; gap: 3px; }
 }
