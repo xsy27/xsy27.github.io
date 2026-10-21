@@ -1,34 +1,3 @@
-// Results remain fully visible if JavaScript is disabled.
-const tabList = document.querySelector('[data-result-tabs]');
-if (tabList) {
-  const tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
-  const activate = (selected, focus = false) => {
-    for (const tab of tabs) {
-      const active = tab === selected;
-      tab.setAttribute('aria-selected', String(active));
-      tab.tabIndex = active ? 0 : -1;
-      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
-    }
-    if (focus) selected.focus();
-  };
-  for (const tab of tabs) {
-    tab.addEventListener('click', () => activate(tab));
-    tab.addEventListener('keydown', (event) => {
-      const index = tabs.indexOf(tab);
-      let next;
-      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-      else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
-      else if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = tabs.length - 1;
-      else return;
-      event.preventDefault();
-      activate(tabs[next], true);
-    });
-  }
-  activate(tabs[0]);
-  tabList.hidden = false;
-}
-
 const copyButton = document.getElementById('copy-citation');
 if (copyButton) {
   copyButton.hidden = false;
@@ -50,7 +19,20 @@ if (copyButton) {
       }
       status.textContent = 'BibTeX copied.';
     } catch {
-      status.textContent = 'Select the citation text to copy it, or use Download .bib.';
+      status.textContent = 'Select the citation text and copy it manually.';
     }
   });
 }
+
+// Native controls work without JavaScript; show a useful fallback on media errors.
+document.querySelectorAll('video').forEach(video => {
+  const showError = () => {
+    const message = video.closest('figure').querySelector('.video-error');
+    if (message) message.hidden = false;
+  };
+  video.addEventListener('error', showError);
+  video.querySelectorAll('source').forEach(source => source.addEventListener('error', showError));
+  video.addEventListener('play', () => {
+    document.querySelectorAll('video').forEach(other => { if (other !== video) other.pause(); });
+  });
+});

@@ -4,20 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="MoSAT generates human motion jointly conditioned on spatial audio and natural-language descriptions. Project page, paper, method, results, and citation.">
+  <meta name="description" content="MoSAT generates human motion jointly conditioned on spatial audio and natural-language descriptions. Explore STAM: rich text annotations extending SAM's paired spatial audio and motion.">
   <meta property="og:title" content="MoSAT: Human Motion Generation from Spatial Audio and Textual Description">
   <meta property="og:description" content="Human motion generation guided by spatial audio and natural-language intent.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://xsy27.github.io/MoSAT/">
   <title>MoSAT — Human Motion Generation from Spatial Audio and Textual Description</title>
   <link rel="canonical" href="https://xsy27.github.io/MoSAT/">
-  <link rel="stylesheet" href="style.css?v=1">
-  <script src="script.js?v=1" defer></script>
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="script.js?v=6" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><nav class="container nav-bar" aria-label="Main navigation"><a class="wordmark" href="#main">MoSAT<span> / </span>STAM</a><div><a href="#overview">Pipeline</a><a href="#dataset">Dataset</a><a href="#results">Results</a><a href="#videos">Videos</a></div></nav></header>
   <main id="main">
     <section class="hero container" aria-labelledby="project-title">
+      <p class="eyebrow">Spatial audio &times; language &times; human motion</p>
       <h1 id="project-title"><span class="project-name">MoSAT</span><span class="project-subtitle">Human Motion Generation from Spatial Audio and Textual Description</span></h1>
       <div class="author-list" aria-label="Authors">
         <span><a href="../index.html">Shuyang Xu</a><sup>1</sup></span>
@@ -44,7 +46,8 @@
       </div>
       <p class="author-note">† Corresponding authors</p>
       <div class="resource-links">
-        <a class="button primary" href="https://arxiv.org/pdf/2609.23797" target="_blank" rel="noopener noreferrer">Read the paper <span aria-hidden="true">↗</span></a>
+        <a class="button primary dataset-button" href="#dataset">Explore the STAM dataset <span aria-hidden="true">&nearr;</span></a>
+        <a class="button" href="https://arxiv.org/pdf/2609.23797" target="_blank" rel="noopener noreferrer">Arxiv <span aria-hidden="true">↗</span></a>
         <a class="button" href="#citation">BibTeX</a>
       </div>
       <p class="project-summary">Text describes <strong>what to do and how</strong>.<br>Spatial audio grounds <strong>where and when to respond</strong>.</p>
@@ -57,17 +60,16 @@
       </div>
     </section>
 
-    <!-- A project video can be added here when a public version is ready. -->
     <section class="section container abstract-section" id="abstract" aria-labelledby="abstract-title">
       <h2 id="abstract-title">Abstract</h2>
       <div class="reading-width">
         <p>Human motion is shaped by both the surrounding environment and behavioral intent. Spatial audio provides directional and temporal cues for a response, while language describes the desired action and its style. <strong>MoSAT</strong> studies human motion generation jointly conditioned on these complementary signals.</p>
-        <p>We introduce <strong>STAM</strong>, a dataset pairing human motion with spatial audio and detailed textual descriptions. MoSAT combines a motion variational autoencoder with a latent flow-matching framework, using hierarchical attention to bring natural-language intent and spatial-audio cues into the motion generation process. We also develop tri-modal evaluators to measure alignment between the multimodal conditions and generated motion. Experiments evaluate motion quality, condition alignment, inference-time editing, and an application to simulated humanoid control.</p>
+        <p>We introduce <strong>STAM</strong>, a dataset that extends SAM's paired spatial audio and human motion with detailed, motion-aligned textual descriptions. MoSAT combines a motion variational autoencoder with a latent flow-matching framework, using hierarchical attention to bring natural-language intent and spatial-audio cues into the motion generation process. We also develop tri-modal evaluators to measure alignment between the multimodal conditions and generated motion. Experiments evaluate motion quality, condition alignment, inference-time editing, and an application to simulated humanoid control.</p>
       </div>
     </section>
 
     <section class="section container" id="overview" aria-labelledby="overview-title">
-      <div class="section-heading"><h2 id="overview-title">How MoSAT works</h2><p>From multimodal conditions to full-body motion.</p></div>
+      <div class="section-heading"><h2 id="overview-title">MoSAT pipeline</h2><p>From multimodal conditions to full-body motion.</p></div>
       <figure class="paper-figure">
         <a href="assets/overview.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the full MoSAT architecture figure">
           <img src="assets/overview.svg" width="5155" height="3324" alt="MoSAT architecture: a Motion VAE compresses motion; text, sound-source direction, and temporal audio features condition a flow-matching transformer" loading="lazy">
@@ -75,43 +77,97 @@
         <figcaption>A Motion VAE learns a compact motion space. An audio-sketch fuser combines text and directional context with temporal audio features, and a conditional flow transformer generates the motion. <a href="assets/overview.svg" target="_blank" rel="noopener noreferrer">View full figure ↗</a></figcaption>
       </figure>
       <div class="method-notes">
-        <div><h3>Paired supervision</h3><p>STAM brings motion, binaural audio, and motion-aligned textual descriptions together.</p></div>
+        <div><h3>Paired supervision</h3><p>STAM adds motion-aligned textual descriptions to SAM's paired motion and binaural audio.</p></div>
         <div><h3>Joint conditioning</h3><p>Hierarchical attention combines linguistic intent with acoustic and directional cues.</p></div>
         <div><h3>Motion-space generation</h3><p>Flow matching generates trajectories in a compact latent space learned by the motion VAE.</p></div>
       </div>
     </section>
 
-    <section class="section container" id="results" aria-labelledby="results-title">
-      <div class="section-heading"><h2 id="results-title">Results</h2><p>Motion generation, editing, and simulated humanoid control.</p></div>
-      <div class="result-tabs" role="tablist" aria-label="Result categories" data-result-tabs hidden>
-        <button type="button" role="tab" id="tab-generation" aria-controls="panel-generation" aria-selected="true" tabindex="0">Motion generation</button>
-        <button type="button" role="tab" id="tab-editing" aria-controls="panel-editing" aria-selected="false" tabindex="-1">Joint editing</button>
-        <button type="button" role="tab" id="tab-humanoid" aria-controls="panel-humanoid" aria-selected="false" tabindex="-1">Humanoid simulation</button>
+    <section class="dataset-wrap" id="dataset" aria-labelledby="dataset-title">
+      <div class="container">
+        <div class="dataset-heading"><div><p class="eyebrow">Enriching SAM with language</p><h2 id="dataset-title">STAM<span>Spatial audio and motion.<br>Now, richly described.</span></h2></div><p class="dataset-intro">SAM already pairs spatial audio with human motion. <strong>Our contribution is the text:</strong> detailed, motion-aligned descriptions that extend SAM into STAM.</p></div>
+        <dl class="dataset-stats"><div><dt>Words of annotation</dt><dd>194K<span>+</span></dd></div><div><dt>Distinct vocabulary terms</dt><dd>1,783</dd></div><div><dt>Descriptions per motion</dt><dd>4</dd></div><div><dt>Retained SAM clips</dt><dd>3,340</dd></div></dl>
+        <div class="dataset-extension" aria-label="STAM extends SAM with text annotations">
+          <div class="sam-foundation"><span class="modality-number">THE FOUNDATION / SAM</span><h3>Spatial audio + motion</h3><p>Existing paired recordings, with 3,340 ten-second clips retained after quality filtering.</p></div>
+          <span class="extension-plus" aria-hidden="true">+</span>
+          <div class="text-contribution"><span class="modality-number">OUR ADDITION / TEXT</span><h3>Rich, aligned descriptions</h3><p>One manual caption and three human-verified, DeepSeek-assisted variants for every motion.</p></div>
+        </div>
+        <div class="modality-grid annotation-details"><article><span class="modality-number">01 / MOTION DESCRIPTION</span><h3>Describe the action</h3><p>Motion-only captions describe the movement itself, providing language supervision aligned with each sequence.</p></article><article><span class="modality-number">02 / ACOUSTIC CONTEXT</span><h3>Connect action to sound</h3><p>Other descriptions explicitly include the sound type and the spatial location of its source.</p></article><article><span class="modality-number">03 / LANGUAGE DIVERSITY</span><h3>More ways to describe motion</h3><p>Four descriptions per motion enrich the language supervision with varied wording across 1,783 vocabulary terms.</p></article></div>
+        <div class="dataset-note"><p><strong>Built on SAM. Enriched with language.</strong> STAM adds motion-aligned descriptions, including motion-only captions and descriptions of sound type and source location.</p><a href="https://arxiv.org/pdf/2609.23797" target="_blank" rel="noopener noreferrer">Dataset details in the paper &nearr;</a></div>
       </div>
-      <section class="result-panel" id="panel-generation" role="tabpanel" aria-labelledby="tab-generation" tabindex="0">
-        <h3>Motion guided by spatial audio and text</h3>
+    </section>
+
+    <section class="section container" id="results" aria-labelledby="results-title">
+      <div class="section-heading"><p class="eyebrow">See what MoSAT can do</p><h2 id="results-title">Motion. Control. Possibility.</h2><p>Motion generation, editing, and simulated humanoid control.</p></div>
+      <section class="result-panel" id="panel-generation" aria-labelledby="generation-title">
+        <p class="eyebrow">01 / Generation</p>
+        <h3 id="generation-title">Motion guided by spatial audio and text</h3>
         <p class="result-description">Qualitative comparisons from the paper illustrate motion generated in response to spatial acoustic cues and natural-language descriptions.</p>
         <figure class="paper-figure result-figure">
           <a href="assets/qualitative.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the full qualitative comparison figure"><img src="assets/qualitative.svg" width="3898" height="4113" alt="Qualitative motion comparisons across multiple scenarios, with human motion sequences and blue spatial sound-source regions" loading="lazy"></a>
           <figcaption>Blue spheres indicate approximate sound-source locations; red dots trace the character’s trajectory. <a href="assets/qualitative.svg" target="_blank" rel="noopener noreferrer">View full figure ↗</a></figcaption>
         </figure>
       </section>
-      <section class="result-panel" id="panel-editing" role="tabpanel" aria-labelledby="tab-editing" tabindex="0">
-        <h3>Control selected joints at inference time</h3>
+      <section class="result-panel" id="panel-editing" aria-labelledby="editing-title">
+        <p class="eyebrow">02 / Editing</p>
+        <h3 id="editing-title">Control selected joints at inference time</h3>
         <p class="result-description">Joint-level constraints specify target positions at selected frames. MoSAT adjusts the generated motion to satisfy these constraints while preserving smooth movement.</p>
         <figure class="paper-figure result-figure">
           <a href="assets/editing.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the full joint-editing figure"><img src="assets/editing.svg" width="3746" height="1563" alt="Six examples of joint-constraint editing with red spheres marking target positions before and after motion adjustment" loading="lazy"></a>
           <figcaption>Red spheres mark prescribed joint positions. <a href="assets/editing.svg" target="_blank" rel="noopener noreferrer">View full figure ↗</a></figcaption>
         </figure>
       </section>
-      <section class="result-panel" id="panel-humanoid" role="tabpanel" aria-labelledby="tab-humanoid" tabindex="0">
-        <h3>From human motion to humanoid simulation</h3>
+      <section class="result-panel" id="panel-humanoid" aria-labelledby="humanoid-title">
+        <p class="eyebrow">03 / Humanoid control</p>
+        <h3 id="humanoid-title">From human motion to humanoid simulation</h3>
         <p class="result-description">Generated human motions are retargeted to a Unitree G1 humanoid and tracked in simulation, demonstrating an application of sound- and language-guided motion generation.</p>
         <figure class="paper-figure result-figure">
           <a href="assets/humanoid.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the full simulated humanoid-control figure"><img src="assets/humanoid.svg" width="2771" height="2294" alt="Unitree G1 humanoid in simulation tracking three motions generated from paired spatial audio and text" loading="lazy"></a>
           <figcaption>Motion tracking in simulation; red spheres indicate audio-source directions. <a href="assets/humanoid.svg" target="_blank" rel="noopener noreferrer">View full figure ↗</a></figcaption>
         </figure>
       </section>
+    </section>
+
+    <section class="section container videos-section" id="videos" aria-labelledby="videos-title">
+        <div class="reel-heading"><div><p class="eyebrow">Paired motion examples</p><h2 id="videos-title">Videos</h2></div><p>Reference motion and MoSAT output, side by side.<br>The blue region indicates the sound source.</p></div>
+        <div class="video-grid" aria-label="Three reference and generated motion pairs">
+          <figure class="motion-reel">
+            <div class="reel-topline"><span>STAM reference</span><span>SEQUENCE 01</span></div>
+            <video controls playsinline loop preload="metadata" poster="assets/0042112-reference.jpg" aria-label="STAM reference, sequence 1"><source src="assets/videos/0042112-reference.webm" type="video/webm"><source src="assets/videos/0042112-reference.mp4" type="video/mp4">Use Open video below to watch this clip.</video>
+            <figcaption><span>10 seconds &middot; Spatial audio</span><a href="assets/videos/0042112-reference.mp4" target="_blank" rel="noopener">Open video &nearr;</a></figcaption>
+            <p class="video-error" role="status" hidden>Video unavailable in this preview. Use Open video, or open this page in a regular browser.</p>
+          </figure>
+          <figure class="motion-reel">
+            <div class="reel-topline"><span>MoSAT output</span><span>SEQUENCE 01</span></div>
+            <video controls playsinline loop preload="metadata" poster="assets/0042112-generated.jpg" aria-label="MoSAT output, sequence 1"><source src="assets/videos/0042112-generated.webm" type="video/webm"><source src="assets/videos/0042112-generated.mp4" type="video/mp4">Use Open video below to watch this clip.</video>
+            <figcaption><span>10 seconds &middot; Spatial audio</span><a href="assets/videos/0042112-generated.mp4" target="_blank" rel="noopener">Open video &nearr;</a></figcaption>
+            <p class="video-error" role="status" hidden>Video unavailable in this preview. Use Open video, or open this page in a regular browser.</p>
+          </figure>
+          <figure class="motion-reel">
+            <div class="reel-topline"><span>STAM reference</span><span>SEQUENCE 02</span></div>
+            <video controls playsinline loop preload="metadata" poster="assets/0591012-reference.jpg" aria-label="STAM reference, sequence 2"><source src="assets/videos/0591012-reference.webm" type="video/webm"><source src="assets/videos/0591012-reference.mp4" type="video/mp4">Use Open video below to watch this clip.</video>
+            <figcaption><span>10 seconds &middot; Spatial audio</span><a href="assets/videos/0591012-reference.mp4" target="_blank" rel="noopener">Open video &nearr;</a></figcaption>
+            <p class="video-error" role="status" hidden>Video unavailable in this preview. Use Open video, or open this page in a regular browser.</p>
+          </figure>
+          <figure class="motion-reel">
+            <div class="reel-topline"><span>MoSAT output</span><span>SEQUENCE 02</span></div>
+            <video controls playsinline loop preload="metadata" poster="assets/0591012-generated.jpg" aria-label="MoSAT output, sequence 2"><source src="assets/videos/0591012-generated.webm" type="video/webm"><source src="assets/videos/0591012-generated.mp4" type="video/mp4">Use Open video below to watch this clip.</video>
+            <figcaption><span>10 seconds &middot; Spatial audio</span><a href="assets/videos/0591012-generated.mp4" target="_blank" rel="noopener">Open video &nearr;</a></figcaption>
+            <p class="video-error" role="status" hidden>Video unavailable in this preview. Use Open video, or open this page in a regular browser.</p>
+          </figure>
+          <figure class="motion-reel">
+            <div class="reel-topline"><span>STAM reference</span><span>SEQUENCE 03</span></div>
+            <video controls playsinline loop preload="metadata" poster="assets/0713000-reference.jpg" aria-label="STAM reference, sequence 3"><source src="assets/videos/0713000-reference.webm" type="video/webm"><source src="assets/videos/0713000-reference.mp4" type="video/mp4">Use Open video below to watch this clip.</video>
+            <figcaption><span>10 seconds &middot; Spatial audio</span><a href="assets/videos/0713000-reference.mp4" target="_blank" rel="noopener">Open video &nearr;</a></figcaption>
+            <p class="video-error" role="status" hidden>Video unavailable in this preview. Use Open video, or open this page in a regular browser.</p>
+          </figure>
+          <figure class="motion-reel">
+            <div class="reel-topline"><span>MoSAT output</span><span>SEQUENCE 03</span></div>
+            <video controls playsinline loop preload="metadata" poster="assets/0713000-generated.jpg" aria-label="MoSAT output, sequence 3"><source src="assets/videos/0713000-generated.webm" type="video/webm"><source src="assets/videos/0713000-generated.mp4" type="video/mp4">Use Open video below to watch this clip.</video>
+            <figcaption><span>10 seconds &middot; Spatial audio</span><a href="assets/videos/0713000-generated.mp4" target="_blank" rel="noopener">Open video &nearr;</a></figcaption>
+            <p class="video-error" role="status" hidden>Video unavailable in this preview. Use Open video, or open this page in a regular browser.</p>
+          </figure>
+        </div>
     </section>
 
     <section class="section container" id="citation" aria-labelledby="citation-title">
