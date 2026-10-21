@@ -231,3 +231,11 @@ select:focus-visible, video:focus-visible { outline: 3px solid #8dbcc0; outline-
 .videos-section .reel-heading > p { color: var(--muted); }
 .videos-section .reel-heading h2 { margin-bottom: 0; }
 .dataset-wrap .annotation-details { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+
+.sequence-description { grid-column: 1 / -1; padding: 22px 26px; background: #eef3e8; border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; }
+.sequence-description:not(:first-child) { margin-top: 18px; }
+.sequence-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; color: var(--accent); font-size: 11px; font-weight: 650; letter-spacing: .04em; }
+.sequence-description blockquote { margin: 12px 0 0; color: var(--ink); font-size: clamp(17px, 2vw, 22px); font-weight: 500; line-height: 1.6; }
+@media (max-width: 600px) {
+ .sequence-description { padding: 18px; }
+}
